@@ -1,0 +1,12 @@
+name = "precar-upload-worker"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+[[r2_buckets]]
+binding = "MY_BUCKET"
+bucket_name = "usedcars"
+preview_bucket_name = "usedcars"
+
+[vars]
+CLOUDFLARE_ACCOUNT_ID = "76d883acb944eccd58a9ad3d23adb293"
+CLOUDFLARE_R2_BUCKET_NAME = "usedcars" 
