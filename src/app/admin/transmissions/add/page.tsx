@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 interface FormData {
@@ -20,6 +20,7 @@ export default function AddTransmission() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [existingTransmissions, setExistingTransmissions] = useState<string[]>([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
@@ -27,6 +28,23 @@ export default function AddTransmission() {
       router.push('/admin/login');
     }
   }, [user, loading, router, isConfigured]);
+
+  useEffect(() => {
+    if (isConfigured && db) {
+      fetchExistingTransmissions();
+    }
+  }, [isConfigured]);
+
+  const fetchExistingTransmissions = async () => {
+    try {
+      const transmissionsCollection = collection(db!, 'transmissions');
+      const transmissionsSnapshot = await getDocs(transmissionsCollection);
+      const transmissionsData = transmissionsSnapshot.docs.map(doc => doc.data().name.toLowerCase());
+      setExistingTransmissions(transmissionsData);
+    } catch (error) {
+      console.error('Error fetching existing transmissions:', error);
+    }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -36,18 +54,31 @@ export default function AddTransmission() {
     }));
   };
 
+  const validateForm = () => {
+    if (!formData.name.trim()) {
+      setError('Transmission type name is required');
+      return false;
+    }
+
+    if (existingTransmissions.includes(formData.name.trim().toLowerCase())) {
+      setError('A transmission type with this name already exists');
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.name.trim()) {
-      setError('Transmission type name is required');
+    if (!validateForm()) {
       return;
     }
 
-    setIsSubmitting(true);
-    setError('');
-
     try {
+      setIsSubmitting(true);
+      setError('');
+
       const transmissionData = {
         name: formData.name.trim(),
         createdAt: new Date(),
@@ -55,13 +86,6 @@ export default function AddTransmission() {
       };
 
       await addDoc(collection(db!, 'transmissions'), transmissionData);
-      
-      // Reset form
-      setFormData({
-        name: ''
-      });
-      
-      // Redirect to transmissions list
       router.push('/admin/transmissions');
     } catch (error) {
       console.error('Error adding transmission:', error);
