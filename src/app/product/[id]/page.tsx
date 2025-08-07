@@ -49,10 +49,10 @@ export default function ProductDetail() {
   };
 
   // Function to handle WhatsApp chat
-  const handleGetPrice = (product: Product) => {
+  const handleWhatsAppInquiry = (product: Product) => {
     const modelInfo = product.modelName ? `${product.brand} ${product.modelName}` : product.brand;
     const message = `Hi, I would like to get the price of vehicle - ${modelInfo} ${product.category} (${product.yearOfManufacture}) with ${product.kilometersDriven.toLocaleString()} km`;
-    const whatsappUrl = `https://wa.me/8075091072?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/918075091072?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
@@ -379,7 +379,7 @@ export default function ProductDetail() {
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <button
-                onClick={() => handleGetPrice(product)}
+                onClick={() => handleWhatsAppInquiry(product)}
                 className="flex-1 bg-gradient-to-r from-yellow-600 to-orange-600 text-white py-4 px-6 rounded-xl text-lg font-bold hover:from-yellow-700 hover:to-orange-700 transition-all duration-300 shadow-2xl hover:shadow-yellow-500/25 transform hover:scale-105 flex items-center justify-center space-x-3"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -479,7 +479,7 @@ export default function ProductDetail() {
                       {/* Action Buttons */}
                       <div className="flex space-x-2">
                         <button
-                          onClick={() => handleGetPrice(relatedProduct)}
+                          onClick={() => handleWhatsAppInquiry(relatedProduct)}
                           className="flex-1 bg-gradient-to-r from-gray-700 to-gray-800 text-white py-2 px-3 rounded-lg text-sm font-bold hover:from-gray-600 hover:to-gray-700 transition-all duration-300 flex items-center justify-center space-x-1 shadow-lg hover:shadow-xl hover:shadow-black/25 transform hover:scale-105"
                         >
                           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">

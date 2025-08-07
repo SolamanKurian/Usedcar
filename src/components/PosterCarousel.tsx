@@ -98,7 +98,7 @@ export default function PosterCarousel() {
 
   if (loading) {
     return (
-      <div className="w-full h-64 bg-gray-200 animate-pulse rounded-lg flex items-center justify-center">
+      <div className="w-full h-48 sm:h-64 md:h-96 lg:h-[500px] xl:h-[600px] bg-gray-200 animate-pulse rounded-lg flex items-center justify-center">
         <div className="text-gray-500">Loading posters...</div>
       </div>
     );
@@ -108,41 +108,58 @@ export default function PosterCarousel() {
     return null; // Don't render anything if no active posters
   }
 
-        return (
-    <div className="relative w-full h-96 md:h-[500px] lg:h-[600px] overflow-hidden">
-             {/* Poster Image */}
-       <div className="w-full h-full relative bg-gradient-to-br from-gray-800 to-gray-900">
-                  <img
-            src={posters[currentIndex].imageUrl}
-            alt={posters[currentIndex].title}
-            className="w-full h-full object-cover transition-all duration-500 hover:scale-105"
-            onError={handleImageError}
-          />
- 
-        </div>
+  return (
+    <div className="relative w-full h-48 sm:h-64 md:h-96 lg:h-[500px] xl:h-[600px] overflow-hidden rounded-lg">
+      {/* Poster Image */}
+      <div className="w-full h-full relative bg-gradient-to-br from-gray-800 to-gray-900">
+        <img
+          src={posters[currentIndex].imageUrl}
+          alt={posters[currentIndex].title}
+          className="w-full h-full object-cover transition-all duration-500 hover:scale-105"
+          onError={handleImageError}
+        />
+      </div>
 
       {/* Navigation Arrows */}
       {posters.length > 1 && (
         <>
           <button
             onClick={goToPrevious}
-            className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-gray-900/80 backdrop-blur-sm text-white p-3 rounded-full hover:bg-gray-800/90 hover:scale-110 transition-all duration-300 border border-yellow-500/30 hover:border-yellow-400/50 shadow-2xl"
+            className="absolute left-2 sm:left-4 md:left-6 top-1/2 transform -translate-y-1/2 bg-gray-900/80 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full hover:bg-gray-800/90 hover:scale-110 transition-all duration-300 border border-yellow-500/30 hover:border-yellow-400/50 shadow-2xl"
             aria-label="Previous poster"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
           <button
             onClick={goToNext}
-            className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-gray-900/80 backdrop-blur-sm text-white p-3 rounded-full hover:bg-gray-800/90 hover:scale-110 transition-all duration-300 border border-yellow-500/30 hover:border-yellow-400/50 shadow-2xl"
+            className="absolute right-2 sm:right-4 md:right-6 top-1/2 transform -translate-y-1/2 bg-gray-900/80 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full hover:bg-gray-800/90 hover:scale-110 transition-all duration-300 border border-yellow-500/30 hover:border-yellow-400/50 shadow-2xl"
             aria-label="Next poster"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
         </>
+      )}
+
+      {/* Dots Indicator */}
+      {posters.length > 1 && (
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          {posters.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+                index === currentIndex 
+                  ? 'bg-yellow-400 scale-125' 
+                  : 'bg-gray-400 hover:bg-gray-300'
+              }`}
+              aria-label={`Go to poster ${index + 1}`}
+            />
+          ))}
+        </div>
       )}
     </div>
   );

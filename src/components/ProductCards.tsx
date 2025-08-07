@@ -42,10 +42,10 @@ export default function ProductCards() {
   };
 
   // Function to handle WhatsApp chat
-  const handleGetPrice = (product: Product) => {
+  const handleWhatsAppInquiry = (product: Product) => {
     const modelInfo = product.modelName ? `${product.brand} ${product.modelName}` : product.brand;
     const message = `Hi, I would like to get the price of vehicle - ${modelInfo} ${product.category} (${product.yearOfManufacture}) with ${product.kilometersDriven.toLocaleString()} km`;
-    const whatsappUrl = `https://wa.me/8075091072?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/918075091072?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
@@ -245,7 +245,7 @@ export default function ProductCards() {
                   {/* Action Buttons */}
                   <div className="flex space-x-3">
                     <button
-                      onClick={() => handleGetPrice(product)}
+                      onClick={() => handleWhatsAppInquiry(product)}
                       className="flex-1 bg-gradient-to-r from-gray-700 to-gray-800 text-white py-3 px-4 rounded-xl text-sm font-bold hover:from-gray-600 hover:to-gray-700 transition-all duration-300 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl hover:shadow-black/25 transform hover:scale-105"
                     >
                       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">

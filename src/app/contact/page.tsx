@@ -131,7 +131,7 @@ export default function ContactPage() {
                     </div>
                   </div>
                   <a
-                    href="https://wa.me/8075091072?text=Hi%2C%20I%20would%20like%20to%20inquire%20about%20your%20vehicles%20and%20services."
+                    href="https://wa.me/918075091072?text=Hi%2C%20I%20would%20like%20to%20inquire%20about%20your%20vehicles%20and%20services."
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-3 rounded-lg font-semibold hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-green-500/25 transform hover:scale-105 flex items-center space-x-2 inline-block"
@@ -200,7 +200,7 @@ export default function ContactPage() {
               </div>
               
               <a
-                href="https://wa.me/8075091072?text=Hi%2C%20I%20would%20like%20to%20use%20your%20Park%20%26%20Sale%20service.%20Can%20you%20provide%20more%20details%20about%20the%20process%3F"
+                href="https://wa.me/918075091072?text=Hi%2C%20I%20would%20like%20to%20use%20your%20Park%20%26%20Sale%20service.%20Can%20you%20provide%20more%20details%20about%20the%20process%3F"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full bg-gradient-to-r from-yellow-600 to-orange-600 text-white py-4 px-6 rounded-xl text-lg font-bold hover:from-yellow-700 hover:to-orange-700 transition-all duration-300 shadow-2xl hover:shadow-yellow-500/25 transform hover:scale-105 flex items-center justify-center space-x-3 inline-block"
@@ -301,7 +301,7 @@ export default function ContactPage() {
                     </p>
                     
                     <a
-                      href="https://wa.me/8075091072?text=Hi%2C%20I%20run%20a%20used%20car%20business%20and%20would%20like%20to%20get%20a%20website%20similar%20to%20PreCar.%20Can%20you%20help%20me%20with%20this%3F"
+                      href="https://wa.me/918075091072?text=Hi%2C%20I%20run%20a%20used%20car%20business%20and%20would%20like%20to%20get%20a%20website%20similar%20to%20PreCar.%20Can%20you%20help%20me%20with%20this%3F"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl text-lg font-bold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 transform hover:scale-105 flex items-center justify-center space-x-3 mx-auto inline-block"

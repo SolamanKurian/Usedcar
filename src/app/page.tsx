@@ -122,16 +122,18 @@ export default function Home() {
       </div>
 
       {/* Posters Section */}
-      <div className="py-20 bg-gray-900">
-        <div className="text-center mb-12 px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+      <div className="py-12 sm:py-16 md:py-20 bg-gray-900">
+        <div className="text-center mb-8 sm:mb-12 px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
             Hot Deals & Big News!
           </h2>
-          <p className="text-xl text-yellow-200 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-yellow-200 max-w-3xl mx-auto px-4">
             Check out our latest offers, seasonal sales, and important updates – all in one place!
           </p>
         </div>
-        <PosterCarousel />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <PosterCarousel />
+        </div>
       </div>
 
       {/* Products Section */}
@@ -287,7 +289,7 @@ export default function Home() {
                 </div>
                 
                 <a
-                  href="https://wa.me/8075091072?text=Hi%2C%20I%20would%20like%20to%20use%20your%20Park%20%26%20Sale%20service.%20Can%20you%20provide%20more%20details%20about%20the%20process%3F"
+                  href="https://wa.me/918075091072?text=Hi%2C%20I%20would%20like%20to%20use%20your%20Park%20%26%20Sale%20service.%20Can%20you%20provide%20more%20details%20about%20the%20process%3F"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full bg-gradient-to-r from-yellow-600 to-orange-600 text-white py-4 px-6 rounded-xl text-lg font-bold hover:from-yellow-700 hover:to-orange-700 transition-all duration-300 shadow-2xl hover:shadow-yellow-500/25 transform hover:scale-105 flex items-center justify-center space-x-3 inline-block"
