@@ -68,7 +68,7 @@ export default function AboutPage() {
                   Welcome to PreCar – Your Trusted Partner for Used Vehicles
                 </h2>
                 <p className="text-xl text-yellow-200 leading-relaxed">
-                  At PreCar, we specialize in the sale and finance of high-quality used cars, bikes, and commercial vehicles, offering both premium and budget-friendly options to suit every need and lifestyle. Whether you're looking for your first car, upgrading to a better ride, or expanding your business fleet, PreCar is here to make the process simple, transparent, and hassle-free.
+                  At PreCar, we specialize in the sale and finance of high-quality used cars, bikes, and commercial vehicles, offering both premium and budget-friendly options to suit every need and lifestyle. Whether you&apos;re looking for your first car, upgrading to a better ride, or expanding your business fleet, PreCar is here to make the process simple, transparent, and hassle-free.
                 </p>
               </div>
 
@@ -167,7 +167,7 @@ export default function AboutPage() {
               Why Choose PreCar?
             </h2>
             <p className="text-xl text-yellow-200 max-w-3xl mx-auto">
-              We're committed to providing exceptional service and the best vehicles at competitive prices
+              We&apos;re committed to providing exceptional service and the best vehicles at competitive prices
             </p>
           </div>
 
@@ -181,7 +181,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-2xl font-bold text-white mb-4">Prime Location</h3>
               <p className="text-yellow-200 leading-relaxed">
-                Located in Kakkanad, we're at the heart of Kerala's growing automotive needs.
+                Located in Kakkanad, we&apos;re at the heart of Kerala&apos;s growing automotive needs.
               </p>
             </div>
 
@@ -193,7 +193,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-2xl font-bold text-white mb-4">South India Delivery</h3>
               <p className="text-yellow-200 leading-relaxed">
-                Delivery Across South India – No matter where you are in the South, we'll get your vehicle delivered to your doorstep.
+                Delivery Across South India – No matter where you are in the South, we&apos;ll get your vehicle delivered to your doorstep.
               </p>
             </div>
 

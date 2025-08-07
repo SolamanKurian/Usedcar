@@ -570,7 +570,7 @@ export default function ProductsManagement() {
                           {(product.images && product.images.length > 0) || (product.imageUrls && product.imageUrls.length > 0) ? (
                             <img
                               className="h-16 w-16 rounded-lg object-cover"
-                              src={(product.images && product.images.length > 0) ? product.images[0] : product.imageUrls[0]}
+                              src={(product.images && product.images.length > 0) ? product.images[0] : (product.imageUrls && product.imageUrls.length > 0 ? product.imageUrls[0] : '')}
                               alt={product.description}
                               onError={(e) => {
                                 const target = e.target as HTMLImageElement;
@@ -722,7 +722,7 @@ export default function ProductsManagement() {
               <h3 className="ml-3 text-lg font-medium text-gray-900">Delete Product</h3>
             </div>
             <p className="text-sm text-gray-600 mb-6">
-              Are you sure you want to delete <strong>"{productToDelete.brand} - {productToDelete.category}"</strong>?
+              Are you sure you want to delete <strong>&quot;{productToDelete.brand} - {productToDelete.category}&quot;</strong>?
             </p>
             <div className="flex justify-end space-x-3">
               <button

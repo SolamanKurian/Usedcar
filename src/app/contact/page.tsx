@@ -68,7 +68,7 @@ export default function ContactPage() {
                   Contact Information
                 </h2>
                 <p className="text-xl text-yellow-200 leading-relaxed">
-                  Visit us in Kakkanad, Kochi or get in touch through phone or WhatsApp. We're here to help you find the perfect vehicle.
+                  Visit us in Kakkanad, Kochi or get in touch through phone or WhatsApp. We&apos;re here to help you find the perfect vehicle.
                 </p>
               </div>
 
@@ -181,7 +181,7 @@ export default function ContactPage() {
               Want to Sell Your Vehicle?
             </h2>
             <p className="text-xl text-yellow-200 max-w-3xl mx-auto">
-              Park your vehicle with us and let us handle the selling process. We'll take care of everything from marketing to finalizing the deal.
+              Park your vehicle with us and let us handle the selling process. We&apos;ll take care of everything from marketing to finalizing the deal.
             </p>
           </div>
 
@@ -195,7 +195,7 @@ export default function ContactPage() {
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4">Park & Sale Service</h3>
                 <p className="text-gray-300 leading-relaxed">
-                  Simply park your vehicle at our facility and we'll handle the entire selling process. No hassle, no stress - just a smooth transaction.
+                  Simply park your vehicle at our facility and we&apos;ll handle the entire selling process. No hassle, no stress - just a smooth transaction.
                 </p>
               </div>
               

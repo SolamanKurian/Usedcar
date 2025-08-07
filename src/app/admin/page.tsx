@@ -403,7 +403,7 @@ export default function AdminDashboard() {
                 <h1 className="text-2xl font-bold text-gray-900">Welcome back, Admin! 👋</h1>
               </div>
             </div>
-            <p className="text-gray-600">Here's your PreCar inventory overview</p>
+            <p className="text-gray-600">Here&apos;s your PreCar inventory overview</p>
           </div>
 
           {/* Stats Cards */}

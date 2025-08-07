@@ -275,7 +275,7 @@ export default function EditPoster() {
           <div className="px-4 py-6 sm:px-0">
             <div className="text-center">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Poster Not Found</h2>
-              <p className="text-gray-600 mb-4">The poster you're looking for doesn't exist.</p>
+                              <p className="text-gray-600 mb-4">The poster you&apos;re looking for doesn&apos;t exist.</p>
               <Link
                 href="/admin/posters"
                 className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700"

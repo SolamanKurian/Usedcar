@@ -229,8 +229,7 @@ export default function AddTestimonialPage() {
             <div className="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
               <Link
                 href="/admin/testimonials"
-                className="px-6 py-3 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
-                disabled={isSubmitting}
+                className={`px-6 py-3 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg transition-colors duration-200 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50'}`}
               >
                 Cancel
               </Link>

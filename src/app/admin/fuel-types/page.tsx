@@ -426,7 +426,7 @@ export default function FuelTypesManagement() {
               <h3 className="ml-3 text-lg font-medium text-gray-900">Delete Fuel Type</h3>
             </div>
             <p className="text-sm text-gray-600 mb-6">
-              Are you sure you want to delete <strong>"{fuelTypeToDelete.name}"</strong>?
+              Are you sure you want to delete <strong>&quot;{fuelTypeToDelete.name}&quot;</strong>?
             </p>
             <div className="flex justify-end space-x-3">
               <button

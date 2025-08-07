@@ -157,7 +157,7 @@ export default function EditTestimonialPage() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47-.881-6.08-2.33" />
           </svg>
           <h3 className="text-lg font-medium text-gray-900 mb-2">Testimonial not found</h3>
-          <p className="text-gray-600 mb-6">The testimonial you're looking for doesn't exist or has been deleted.</p>
+                          <p className="text-gray-600 mb-6">The testimonial you&apos;re looking for doesn&apos;t exist or has been deleted.</p>
           <Link
             href="/admin/testimonials"
             className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
@@ -307,8 +307,7 @@ export default function EditTestimonialPage() {
               <div className="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
                 <Link
                   href="/admin/testimonials"
-                  className="px-6 py-3 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors duration-200"
-                  disabled={isSubmitting}
+                  className={`px-6 py-3 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg transition-colors duration-200 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50'}`}
                 >
                   Cancel
                 </Link>

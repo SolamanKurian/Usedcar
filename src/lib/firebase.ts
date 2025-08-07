@@ -15,7 +15,7 @@ const firebaseConfig = {
 const isFirebaseConfigured = true;
 
 // Initialize Firebase
-let app: any = null;
+let app: ReturnType<typeof initializeApp> | null = null;
 let auth: Auth | null = null;
 let db: Firestore | null = null;
 

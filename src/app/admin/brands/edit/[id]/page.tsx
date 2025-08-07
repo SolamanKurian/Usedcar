@@ -250,7 +250,7 @@ export default function EditBrand() {
               Brand Not Found
             </h2>
             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              The brand you're looking for doesn't exist or has been deleted.
+              The brand you&apos;re looking for doesn&apos;t exist or has been deleted.
             </p>
             <Link
               href="/admin/brands"

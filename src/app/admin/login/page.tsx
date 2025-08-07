@@ -21,8 +21,9 @@ export default function AdminLogin() {
     try {
       await login(email, password);
       router.push('/admin');
-    } catch (error: any) {
-      setError(error.message || 'Failed to login');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to login';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

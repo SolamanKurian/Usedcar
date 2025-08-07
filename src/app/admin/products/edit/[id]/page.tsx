@@ -463,7 +463,7 @@ export default function EditProduct() {
                 </svg>
               </div>
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Product Not Found</h2>
-              <p className="text-gray-600 text-lg mb-6">The product you're looking for doesn't exist.</p>
+                              <p className="text-gray-600 text-lg mb-6">The product you&apos;re looking for doesn&apos;t exist.</p>
               <Link
                 href="/admin/products"
                 className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg text-sm font-medium hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-md hover:shadow-lg"

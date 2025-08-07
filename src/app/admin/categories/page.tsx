@@ -426,7 +426,7 @@ export default function CategoriesManagement() {
               <h3 className="ml-3 text-lg font-medium text-gray-900">Delete Category</h3>
             </div>
             <p className="text-sm text-gray-600 mb-6">
-              Are you sure you want to delete <strong>"{categoryToDelete.name}"</strong>?
+              Are you sure you want to delete <strong>&quot;{categoryToDelete.name}&quot;</strong>?
             </p>
             <div className="flex justify-end space-x-3">
               <button

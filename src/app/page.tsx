@@ -145,7 +145,7 @@ export default function Home() {
               Why Choose Precars?
             </h2>
             <p className="text-xl text-yellow-200 max-w-3xl mx-auto">
-              At Precars, we offer a smooth and trusted way to buy and sell used cars, bikes, scooters, jeeps, and commercial vehicles. Here's what makes us stand out:
+              At Precars, we offer a smooth and trusted way to buy and sell used cars, bikes, scooters, jeeps, and commercial vehicles. Here&apos;s what makes us stand out:
             </p>
           </div>
 
@@ -156,7 +156,7 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-bold text-white mb-4">All Types of Vehicles</h3>
               <p className="text-yellow-200 leading-relaxed">
-                We have a large collection of cars, jeeps, bikes, scooters, and commercial vehicles. Whether for personal use or business, you'll find the right one with us.
+                We have a large collection of cars, jeeps, bikes, scooters, and commercial vehicles. Whether for personal use or business, you&apos;ll find the right one with us.
               </p>
             </div>
 
@@ -229,7 +229,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-white">Professional Marketing</h3>
-                    <p className="text-gray-300">We'll showcase your vehicle to thousands of potential buyers</p>
+                    <p className="text-gray-300">We&apos;ll showcase your vehicle to thousands of potential buyers</p>
                   </div>
                 </div>
 
@@ -282,7 +282,7 @@ export default function Home() {
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-4">Park & Sale Service</h3>
                   <p className="text-gray-300 leading-relaxed">
-                    Simply park your vehicle at our facility and we'll handle the entire selling process. No hassle, no stress - just a smooth transaction.
+                    Simply park your vehicle at our facility and we&apos;ll handle the entire selling process. No hassle, no stress - just a smooth transaction.
                   </p>
                 </div>
                 

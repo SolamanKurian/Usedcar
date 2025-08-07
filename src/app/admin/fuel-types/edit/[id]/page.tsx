@@ -250,7 +250,7 @@ export default function EditFuelType() {
               Fuel Type Not Found
             </h2>
             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              The fuel type you're looking for doesn't exist or has been deleted.
+              The fuel type you&apos;re looking for doesn&apos;t exist or has been deleted.
             </p>
             <Link
               href="/admin/fuel-types"

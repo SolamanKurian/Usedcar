@@ -21,7 +21,7 @@ export default function Footer() {
                </div>
             </div>
             <p className="text-yellow-200 leading-relaxed">
-              Your trusted partner for quality used cars. We're committed to providing exceptional service and the best vehicles at competitive prices.
+              Your trusted partner for quality used cars. We&apos;re committed to providing exceptional service and the best vehicles at competitive prices.
             </p>
           </div>
 
