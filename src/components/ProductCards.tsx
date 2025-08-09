@@ -56,12 +56,11 @@ export default function ProductCards() {
       const shareUrl = `${origin}/product/${product.id}`;
       const title = `${product.brand} ${product.modelName ?? ''}`.trim();
       const text = `Check out this ${product.category} (${product.yearOfManufacture}) on PreCar`;
-      // @ts-ignore
-      if (navigator.share) {
-        // @ts-ignore
-        await navigator.share({ title, text, url: shareUrl });
-      } else if (navigator.clipboard) {
-        await navigator.clipboard.writeText(shareUrl);
+      const nav: any = typeof navigator !== 'undefined' ? (navigator as any) : null;
+      if (nav && typeof nav.share === 'function') {
+        await nav.share({ title, text, url: shareUrl });
+      } else if (nav && nav.clipboard && typeof nav.clipboard.writeText === 'function') {
+        await nav.clipboard.writeText(shareUrl);
       }
     } catch {}
   };

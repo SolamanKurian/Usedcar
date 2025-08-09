@@ -144,11 +144,12 @@ export default function ProductDetail() {
       const title = product ? `${product.brand} ${product.modelName ?? ''}`.trim() : 'PreCar Vehicle';
       const text = product ? `Check out this ${product.category} (${product.yearOfManufacture}) on PreCar` : 'Check out this vehicle on PreCar';
 
-      if (navigator.share) {
-        await navigator.share({ title, text, url: shareUrl });
+      const nav: any = typeof navigator !== 'undefined' ? (navigator as any) : null;
+      if (nav && typeof nav.share === 'function') {
+        await nav.share({ title, text, url: shareUrl });
         setShareMessage('Shared');
-      } else if (navigator.clipboard && shareUrl) {
-        await navigator.clipboard.writeText(shareUrl);
+      } else if (nav && nav.clipboard && typeof nav.clipboard.writeText === 'function' && shareUrl) {
+        await nav.clipboard.writeText(shareUrl);
         setShareMessage('Link copied to clipboard');
       } else {
         setShareMessage('Copy this link: ' + shareUrl);
@@ -560,12 +561,11 @@ export default function ProductDetail() {
                             const shareUrl = `${origin}/product/${relatedProduct.id}`;
                             const title = `${relatedProduct.brand} ${relatedProduct.modelName ?? ''}`.trim();
                             const text = `Check out this ${relatedProduct.category} (${relatedProduct.yearOfManufacture}) on PreCar`;
-                            // @ts-ignore
-                            if (navigator.share) {
-                              // @ts-ignore
-                              navigator.share({ title, text, url: shareUrl }).catch(() => {});
-                            } else if (navigator.clipboard) {
-                              navigator.clipboard.writeText(shareUrl).catch(() => {});
+                            const nav: any = typeof navigator !== 'undefined' ? (navigator as any) : null;
+                            if (nav && typeof nav.share === 'function') {
+                              nav.share({ title, text, url: shareUrl }).catch(() => {});
+                            } else if (nav && nav.clipboard && typeof nav.clipboard.writeText === 'function') {
+                              nav.clipboard.writeText(shareUrl).catch(() => {});
                             }
                           }}
                           className="px-3 py-2 border-2 border-gray-600 text-gray-300 rounded-lg text-sm font-bold hover:border-gray-500 hover:text-gray-200 hover:bg-gray-700/20 transition-all duration-300 flex items-center justify-center space-x-1 transform hover:scale-105"
