@@ -85,10 +85,14 @@ export default function AllProductsPage() {
       const shareUrl = `${origin}/product/${product.id}`;
       const title = `${product.brand} ${product.modelName ?? ''}`.trim();
       const text = `Check out this ${product.category} (${product.yearOfManufacture}) on PreCar`;
-      const nav: any = typeof navigator !== 'undefined' ? (navigator as any) : null;
-      if (nav && typeof nav.share === 'function') {
+      type NavigatorWithShare = Navigator & {
+        share?: (data: { title?: string; text?: string; url?: string }) => Promise<void>;
+        clipboard?: { writeText?: (text: string) => Promise<void> };
+      };
+      const nav = (typeof navigator !== 'undefined' ? (navigator as NavigatorWithShare) : undefined);
+      if (nav?.share) {
         await nav.share({ title, text, url: shareUrl });
-      } else if (nav && nav.clipboard && typeof nav.clipboard.writeText === 'function') {
+      } else if (nav?.clipboard?.writeText) {
         await nav.clipboard.writeText(shareUrl);
       }
     } catch (e) {

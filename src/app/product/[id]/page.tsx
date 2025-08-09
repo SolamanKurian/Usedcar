@@ -144,11 +144,15 @@ export default function ProductDetail() {
       const title = product ? `${product.brand} ${product.modelName ?? ''}`.trim() : 'PreCar Vehicle';
       const text = product ? `Check out this ${product.category} (${product.yearOfManufacture}) on PreCar` : 'Check out this vehicle on PreCar';
 
-      const nav: any = typeof navigator !== 'undefined' ? (navigator as any) : null;
-      if (nav && typeof nav.share === 'function') {
+      type NavigatorWithShare = Navigator & {
+        share?: (data: { title?: string; text?: string; url?: string }) => Promise<void>;
+        clipboard?: { writeText?: (text: string) => Promise<void> };
+      };
+      const nav = (typeof navigator !== 'undefined' ? (navigator as NavigatorWithShare) : undefined);
+      if (nav?.share) {
         await nav.share({ title, text, url: shareUrl });
         setShareMessage('Shared');
-      } else if (nav && nav.clipboard && typeof nav.clipboard.writeText === 'function' && shareUrl) {
+      } else if (nav?.clipboard?.writeText && shareUrl) {
         await nav.clipboard.writeText(shareUrl);
         setShareMessage('Link copied to clipboard');
       } else {
@@ -561,10 +565,14 @@ export default function ProductDetail() {
                             const shareUrl = `${origin}/product/${relatedProduct.id}`;
                             const title = `${relatedProduct.brand} ${relatedProduct.modelName ?? ''}`.trim();
                             const text = `Check out this ${relatedProduct.category} (${relatedProduct.yearOfManufacture}) on PreCar`;
-                            const nav: any = typeof navigator !== 'undefined' ? (navigator as any) : null;
-                            if (nav && typeof nav.share === 'function') {
+                            type NavigatorWithShare = Navigator & {
+                              share?: (data: { title?: string; text?: string; url?: string }) => Promise<void>;
+                              clipboard?: { writeText?: (text: string) => Promise<void> };
+                            };
+                            const nav = (typeof navigator !== 'undefined' ? (navigator as NavigatorWithShare) : undefined);
+                            if (nav?.share) {
                               nav.share({ title, text, url: shareUrl }).catch(() => {});
-                            } else if (nav && nav.clipboard && typeof nav.clipboard.writeText === 'function') {
+                            } else if (nav?.clipboard?.writeText) {
                               nav.clipboard.writeText(shareUrl).catch(() => {});
                             }
                           }}
