@@ -32,6 +32,7 @@ export default function ProductDetail() {
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [shareMessage, setShareMessage] = useState<string>('');
 
   // Function to convert worker URLs back to R2 URLs for display
   const convertWorkerUrlToR2 = (url: string): string => {
@@ -134,6 +135,39 @@ export default function ProductDetail() {
       setRelatedProducts(productsData);
     } catch (error) {
       console.error('Error fetching related products:', error);
+    }
+  };
+
+  const handleShareCurrentPage = async () => {
+    try {
+      const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+      const title = product ? `${product.brand} ${product.modelName ?? ''}`.trim() : 'PreCar Vehicle';
+      const text = product ? `Check out this ${product.category} (${product.yearOfManufacture}) on PreCar` : 'Check out this vehicle on PreCar';
+
+      if (navigator.share) {
+        await navigator.share({ title, text, url: shareUrl });
+        setShareMessage('Shared');
+      } else if (navigator.clipboard && shareUrl) {
+        await navigator.clipboard.writeText(shareUrl);
+        setShareMessage('Link copied to clipboard');
+      } else {
+        setShareMessage('Copy this link: ' + shareUrl);
+      }
+    } catch (err) {
+      // User may cancel share; provide silent fallback
+      try {
+        const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+        if (navigator.clipboard && shareUrl) {
+          await navigator.clipboard.writeText(shareUrl);
+          setShareMessage('Link copied to clipboard');
+        }
+      } catch {}
+    } finally {
+      if (shareMessage) {
+        setTimeout(() => setShareMessage(''), 2000);
+      } else {
+        setTimeout(() => setShareMessage(''), 2000);
+      }
     }
   };
 
@@ -387,6 +421,21 @@ export default function ProductDetail() {
                 </svg>
                 <span>Get Price on WhatsApp</span>
               </button>
+
+              <button
+                onClick={handleShareCurrentPage}
+                className="flex-1 bg-gray-800/80 text-white py-4 px-6 rounded-xl text-lg font-bold hover:bg-gray-700 transition-all duration-300 border border-gray-700 flex items-center justify-center space-x-3"
+                aria-label="Share this vehicle"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <circle cx="6" cy="12" r="2" strokeWidth={2} />
+                  <circle cx="18" cy="6" r="2" strokeWidth={2} />
+                  <circle cx="18" cy="18" r="2" strokeWidth={2} />
+                  <path d="M8 12l8-6" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M8 12l8 6" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <span>Share</span>
+              </button>
               
               <Link
                 href="/all-products"
@@ -398,6 +447,12 @@ export default function ProductDetail() {
                 <span>Browse All Cars</span>
               </Link>
             </div>
+
+            {shareMessage && (
+              <div className="mt-3 text-center text-sm text-gray-300">
+                {shareMessage}
+              </div>
+            )}
           </div>
         </div>
 
@@ -498,6 +553,33 @@ export default function ProductDetail() {
                           </svg>
                           <span>View</span>
                         </Link>
+
+                        <button
+                          onClick={() => {
+                            const origin = typeof window !== 'undefined' ? window.location.origin : '';
+                            const shareUrl = `${origin}/product/${relatedProduct.id}`;
+                            const title = `${relatedProduct.brand} ${relatedProduct.modelName ?? ''}`.trim();
+                            const text = `Check out this ${relatedProduct.category} (${relatedProduct.yearOfManufacture}) on PreCar`;
+                            // @ts-ignore
+                            if (navigator.share) {
+                              // @ts-ignore
+                              navigator.share({ title, text, url: shareUrl }).catch(() => {});
+                            } else if (navigator.clipboard) {
+                              navigator.clipboard.writeText(shareUrl).catch(() => {});
+                            }
+                          }}
+                          className="px-3 py-2 border-2 border-gray-600 text-gray-300 rounded-lg text-sm font-bold hover:border-gray-500 hover:text-gray-200 hover:bg-gray-700/20 transition-all duration-300 flex items-center justify-center space-x-1 transform hover:scale-105"
+                          aria-label="Share product"
+                        >
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <circle cx="6" cy="12" r="2" strokeWidth={2} />
+                            <circle cx="18" cy="6" r="2" strokeWidth={2} />
+                            <circle cx="18" cy="18" r="2" strokeWidth={2} />
+                            <path d="M8 12l8-6" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M8 12l8 6" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                          <span>Share</span>
+                        </button>
                       </div>
                     </div>
                   </div>

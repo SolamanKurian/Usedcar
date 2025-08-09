@@ -78,6 +78,25 @@ export default function AllProductsPage() {
     window.open(whatsappUrl, '_blank');
   };
 
+  // Share a product link
+  const handleShareProduct = async (product: Product) => {
+    try {
+      const origin = typeof window !== 'undefined' ? window.location.origin : '';
+      const shareUrl = `${origin}/product/${product.id}`;
+      const title = `${product.brand} ${product.modelName ?? ''}`.trim();
+      const text = `Check out this ${product.category} (${product.yearOfManufacture}) on PreCar`;
+      // @ts-ignore - navigator.share may not be in TypeScript dom lib
+      if (navigator.share) {
+        // @ts-ignore
+        await navigator.share({ title, text, url: shareUrl });
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(shareUrl);
+      }
+    } catch (e) {
+      // no-op on cancel
+    }
+  };
+
   // Filter and sort products
   const filterAndSortProducts = () => {
     let filtered = [...products];
@@ -305,7 +324,7 @@ export default function AllProductsPage() {
               Browse our complete selection of quality used cars and machinery
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(8)].map((_, index) => (
               <div key={index} className="bg-gray-800/50 rounded-2xl border border-gray-700 p-6 animate-pulse">
                 <div className="w-full h-48 bg-gray-700 rounded-xl mb-4"></div>
@@ -366,181 +385,26 @@ export default function AllProductsPage() {
          <div className="absolute inset-0 bg-black/60"></div>
          {/* Gradient Overlay */}
          <div className="absolute inset-0 bg-gradient-to-br from-yellow-600/20 via-orange-600/20 to-red-600/20"></div>
-         
-                   <div className="relative z-10 py-20 pb-32">
+          
+                   <div className="relative z-10 py-6 pb-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               {/* Header */}
-              <div className="text-center mb-12">
+              <div className="text-center mb-4">
                 <div className="flex items-center justify-center mb-6">
-                  <h2 className="text-4xl md:text-5xl font-bold text-white">
+                  <h2 className="text-3xl md:text-4xl font-bold text-white">
                     All Available Vehicles
                   </h2>
                 </div>
-                <p className="text-xl text-gray-200 max-w-3xl mx-auto">
+                <p className="text-base md:text-lg text-gray-200 max-w-3xl mx-auto">
                   Browse our complete selection of quality used cars and machinery
                 </p>
-                <p className="text-lg text-gray-300 mt-4">
+                <p className="text-sm md:text-base text-gray-300 mt-2">
                   Showing {filteredProducts.length > 0 ? startIndex + 1 : 0}-{Math.min(endIndex, filteredProducts.length)} of {filteredProducts.length} available vehicles
                   {totalPages > 1 && ` (Page ${currentPage} of ${totalPages})`}
                 </p>
               </div>
 
-              {/* Search and Filters */}
-              <div className="hidden lg:block mb-8 bg-gray-900/80 backdrop-blur-sm rounded-2xl border border-gray-700 p-6">
-           {/* Search Bar */}
-           <div className="mb-6">
-             <div className="relative">
-               <input
-                 type="text"
-                 placeholder="Search by model name, brand, or category..."
-                 value={searchTerm}
-                 onChange={(e) => setSearchTerm(e.target.value)}
-                 className="w-full px-4 py-3 pl-12 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
-               />
-               <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-               </svg>
-             </div>
-           </div>
-
-           {/* Filters Grid */}
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-4 mb-6">
-             {/* Category Filter */}
-             <div>
-               <label className="block text-sm font-semibold text-gray-300 mb-2">Category</label>
-               <select
-                 value={selectedCategory}
-                 onChange={(e) => setSelectedCategory(e.target.value)}
-                 className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
-               >
-                 <option value="">All Categories</option>
-                 {categories.map(category => (
-                   <option key={category} value={category}>{category}</option>
-                 ))}
-               </select>
-             </div>
-
-             {/* Brand Filter */}
-             <div>
-               <label className="block text-sm font-semibold text-gray-300 mb-2">Brand</label>
-               <select
-                 value={selectedBrand}
-                 onChange={(e) => setSelectedBrand(e.target.value)}
-                 className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
-               >
-                 <option value="">All Brands</option>
-                 {brands.map(brand => (
-                   <option key={brand} value={brand}>{brand}</option>
-                 ))}
-               </select>
-             </div>
-
-             {/* Model Filter */}
-             <div>
-               <label className="block text-sm font-semibold text-gray-300 mb-2">Model</label>
-               <select
-                 value={selectedModel}
-                 onChange={(e) => setSelectedModel(e.target.value)}
-                 className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
-               >
-                 <option value="">All Models</option>
-                 {models.map(model => (
-                   <option key={model} value={model}>{model}</option>
-                 ))}
-               </select>
-             </div>
-
-             {/* Year From Filter */}
-             <div>
-               <label className="block text-sm font-semibold text-gray-300 mb-2">Year From</label>
-               <select
-                 value={selectedYearFrom}
-                 onChange={(e) => setSelectedYearFrom(e.target.value)}
-                 className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
-               >
-                 <option value="">Any Year</option>
-                 {years.map(year => (
-                   <option key={year} value={year}>{year}</option>
-                 ))}
-               </select>
-             </div>
-
-             {/* Year To Filter */}
-             <div>
-               <label className="block text-sm font-semibold text-gray-300 mb-2">Year To</label>
-               <select
-                 value={selectedYearTo}
-                 onChange={(e) => setSelectedYearTo(e.target.value)}
-                 className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
-               >
-                 <option value="">Any Year</option>
-                 {years.map(year => (
-                   <option key={year} value={year}>{year}</option>
-                 ))}
-               </select>
-             </div>
-
-             {/* Fuel Filter */}
-             <div>
-               <label className="block text-sm font-semibold text-gray-300 mb-2">Fuel</label>
-               <select
-                 value={selectedFuel}
-                 onChange={(e) => setSelectedFuel(e.target.value)}
-                 className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
-               >
-                 <option value="">All Fuels</option>
-                 {fuels.map(fuel => (
-                   <option key={fuel} value={fuel}>{fuel}</option>
-                 ))}
-               </select>
-             </div>
-
-             {/* Transmission Filter */}
-             <div>
-               <label className="block text-sm font-semibold text-gray-300 mb-2">Transmission</label>
-               <select
-                 value={selectedTransmission}
-                 onChange={(e) => setSelectedTransmission(e.target.value)}
-                 className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
-               >
-                 <option value="">All Transmissions</option>
-                 {transmissions.map(transmission => (
-                   <option key={transmission} value={transmission}>{transmission}</option>
-                 ))}
-               </select>
-             </div>
-
-             {/* Sort By */}
-             <div>
-               <label className="block text-sm font-semibold text-gray-300 mb-2">Sort By</label>
-               <select
-                 value={sortBy}
-                 onChange={(e) => setSortBy(e.target.value)}
-                 className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
-               >
-                 <option value="newest">Newest Year</option>
-                 <option value="oldest">Oldest Year</option>
-                 <option value="lowest-km">Lowest KM</option>
-                 <option value="highest-km">Highest KM</option>
-               </select>
-             </div>
-           </div>
-
-                      {/* Clear Filters Button */}
-            {(searchTerm || selectedCategory || selectedBrand || selectedModel || selectedYearFrom || selectedYearTo || selectedFuel || selectedTransmission) && (
-              <div className="flex justify-center">
-                <button
-                  onClick={clearFilters}
-                  className="inline-flex items-center px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-lg hover:bg-gray-500 transition-colors duration-200"
-                >
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                  Clear All Filters
-                </button>
-              </div>
-            )}
-          </div>
+              {/* Filters moved to left sidebar in main content */}
             </div>
           </div>
           
@@ -549,116 +413,61 @@ export default function AllProductsPage() {
         </div>
 
        <div className="py-20">
-       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Mobile Filter Button */}
-        <div className="lg:hidden mb-6">
-          <button
-            onClick={() => setShowMobileFilters(true)}
-            className="w-full bg-gray-800/80 backdrop-blur-sm border border-gray-700 rounded-xl p-4 flex items-center justify-between text-white hover:bg-gray-700/80 transition-all duration-200"
-          >
-            <div className="flex items-center space-x-3">
-              <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z" />
-              </svg>
-              <span className="font-medium">Search & Filters</span>
-            </div>
-            <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-        </div>
-
-        {/* Mobile Filter Popup */}
-        {showMobileFilters && (
-          <div className="lg:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm">
-            <div className="absolute inset-0 flex items-end">
-              <div className="w-full bg-gray-900 rounded-t-3xl max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-gray-900 border-b border-gray-700 p-4 flex items-center justify-between">
-                  <h3 className="text-lg font-bold text-white">Search & Filters</h3>
-                  <button
-                    onClick={() => setShowMobileFilters(false)}
-                    className="p-2 text-gray-400 hover:text-white"
-                  >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* Left Sidebar - Desktop */}
+            <aside className="hidden lg:block lg:col-span-3">
+              <div className="sticky top-24 bg-gray-900/80 backdrop-blur-sm rounded-2xl border border-gray-700 p-6 space-y-6">
+                {/* Search */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-300 mb-2">Search</label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="Search by model, brand, or category..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full px-4 py-3 pl-12 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
+                    />
+                    <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
-                  </button>
-                </div>
-                
-                <div className="p-4 space-y-4">
-                  {/* Search Bar */}
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">Search</label>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        placeholder="Search by model name, brand, or category..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full px-4 py-3 pl-12 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
-                      />
-                      <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                    </div>
                   </div>
-
-                  {/* Category Filter */}
+                </div>
+                {/* Filters */}
+                <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-semibold text-gray-300 mb-2">Category</label>
-                    <select
-                      value={selectedCategory}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                      className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
-                    >
+                    <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200">
                       <option value="">All Categories</option>
                       {categories.map(category => (
                         <option key={category} value={category}>{category}</option>
                       ))}
                     </select>
                   </div>
-
-                  {/* Brand Filter */}
                   <div>
                     <label className="block text-sm font-semibold text-gray-300 mb-2">Brand</label>
-                    <select
-                      value={selectedBrand}
-                      onChange={(e) => setSelectedBrand(e.target.value)}
-                      className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
-                    >
+                    <select value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)} className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200">
                       <option value="">All Brands</option>
                       {brands.map(brand => (
                         <option key={brand} value={brand}>{brand}</option>
                       ))}
                     </select>
                   </div>
-
-                  {/* Model Filter */}
                   <div>
                     <label className="block text-sm font-semibold text-gray-300 mb-2">Model</label>
-                    <select
-                      value={selectedModel}
-                      onChange={(e) => setSelectedModel(e.target.value)}
-                      className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
-                    >
+                    <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)} className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200">
                       <option value="">All Models</option>
                       {models.map(model => (
                         <option key={model} value={model}>{model}</option>
                       ))}
                     </select>
                   </div>
-
-                  {/* Year Range Filters */}
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className="block text-sm font-semibold text-gray-300 mb-2">Year From</label>
-                      <select
-                        value={selectedYearFrom}
-                        onChange={(e) => setSelectedYearFrom(e.target.value)}
-                        className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
-                      >
-                        <option value="">Any Year</option>
+                      <select value={selectedYearFrom} onChange={(e) => setSelectedYearFrom(e.target.value)} className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200">
+                        <option value="">Any</option>
                         {years.map(year => (
                           <option key={year} value={year}>{year}</option>
                         ))}
@@ -666,90 +475,215 @@ export default function AllProductsPage() {
                     </div>
                     <div>
                       <label className="block text-sm font-semibold text-gray-300 mb-2">Year To</label>
-                      <select
-                        value={selectedYearTo}
-                        onChange={(e) => setSelectedYearTo(e.target.value)}
-                        className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
-                      >
-                        <option value="">Any Year</option>
+                      <select value={selectedYearTo} onChange={(e) => setSelectedYearTo(e.target.value)} className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200">
+                        <option value="">Any</option>
                         {years.map(year => (
                           <option key={year} value={year}>{year}</option>
                         ))}
                       </select>
                     </div>
                   </div>
-
-                  {/* Fuel Filter */}
                   <div>
                     <label className="block text-sm font-semibold text-gray-300 mb-2">Fuel</label>
-                    <select
-                      value={selectedFuel}
-                      onChange={(e) => setSelectedFuel(e.target.value)}
-                      className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
-                    >
+                    <select value={selectedFuel} onChange={(e) => setSelectedFuel(e.target.value)} className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200">
                       <option value="">All Fuels</option>
                       {fuels.map(fuel => (
                         <option key={fuel} value={fuel}>{fuel}</option>
                       ))}
                     </select>
                   </div>
-
-                  {/* Transmission Filter */}
                   <div>
                     <label className="block text-sm font-semibold text-gray-300 mb-2">Transmission</label>
-                    <select
-                      value={selectedTransmission}
-                      onChange={(e) => setSelectedTransmission(e.target.value)}
-                      className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
-                    >
+                    <select value={selectedTransmission} onChange={(e) => setSelectedTransmission(e.target.value)} className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200">
                       <option value="">All Transmissions</option>
                       {transmissions.map(transmission => (
                         <option key={transmission} value={transmission}>{transmission}</option>
                       ))}
                     </select>
                   </div>
-
-                  {/* Sort By */}
                   <div>
                     <label className="block text-sm font-semibold text-gray-300 mb-2">Sort By</label>
-                    <select
-                      value={sortBy}
-                      onChange={(e) => setSortBy(e.target.value)}
-                      className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
-                    >
+                    <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200">
                       <option value="newest">Newest Year</option>
                       <option value="oldest">Oldest Year</option>
                       <option value="lowest-km">Lowest KM</option>
                       <option value="highest-km">Highest KM</option>
                     </select>
                   </div>
+                </div>
+                {(searchTerm || selectedCategory || selectedBrand || selectedModel || selectedYearFrom || selectedYearTo || selectedFuel || selectedTransmission) && (
+                  <div className="pt-2">
+                    <button onClick={clearFilters} className="w-full inline-flex items-center justify-center px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-lg hover:bg-gray-500 transition-colors duration-200">
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                      Clear All Filters
+                    </button>
+                  </div>
+                )}
+              </div>
+            </aside>
 
-                  {/* Action Buttons */}
-                  <div className="flex space-x-3 pt-4">
-                    <button
-                      onClick={() => {
-                        clearFilters();
-                        setShowMobileFilters(false);
-                      }}
-                      className="flex-1 px-4 py-3 bg-gray-600 text-white text-sm font-medium rounded-lg hover:bg-gray-500 transition-colors duration-200"
+            {/* Main Content */}
+            <section className="lg:col-span-9">
+              {/* Mobile Controls: Filters + Sort */}
+              <div className="lg:hidden mb-6 grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => setShowMobileFilters(true)}
+                  className="col-span-1 bg-gradient-to-r from-yellow-600 to-orange-600 text-white rounded-xl p-3 flex items-center justify-center shadow-lg hover:shadow-xl transition-transform duration-200 active:scale-95"
+                >
+                  <svg className="w-5 h-5 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h18M6 12h12M10 20h4" />
+                  </svg>
+                  <span className="font-semibold">Filters</span>
+                </button>
+                <div className="col-span-1">
+                  <div className="relative">
+                    <svg className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16h10M7 8h10M10 4l-3 4 3 4M14 12l3 4-3 4" />
+                    </svg>
+                    <select
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value)}
+                      className="appearance-none w-full pl-10 pr-9 py-3 bg-gray-800/80 border border-gray-700 rounded-xl text-white shadow-inner focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
                     >
-                      Clear All
-                    </button>
-                    <button
-                      onClick={() => setShowMobileFilters(false)}
-                      className="flex-1 px-4 py-3 bg-yellow-600 text-white text-sm font-medium rounded-lg hover:bg-yellow-700 transition-colors duration-200"
-                    >
-                      Apply Filters
-                    </button>
+                      <option value="newest">Newest Year</option>
+                      <option value="oldest">Oldest Year</option>
+                      <option value="lowest-km">Lowest KM</option>
+                      <option value="highest-km">Highest KM</option>
+                    </select>
+                    <svg className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
-        
-        {/* Products Grid */}
-        {currentProducts.length === 0 ? (
+
+              {/* Mobile Filter Drawer */}
+              {showMobileFilters && (
+                <div className="lg:hidden fixed inset-0 z-50">
+                  <div className="absolute inset-0 bg-black/50" onClick={() => setShowMobileFilters(false)}></div>
+                  <div className="absolute inset-y-0 left-0 w-5/6 max-w-sm bg-gray-900 border-r border-gray-700 shadow-xl flex flex-col">
+                    <div className="sticky top-0 bg-gray-900 border-b border-gray-700 p-4 flex items-center justify-between">
+                      <h3 className="text-lg font-bold text-white">Filters</h3>
+                      <button onClick={() => setShowMobileFilters(false)} className="p-2 text-gray-400 hover:text-white">
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                    <div className="p-4 space-y-4 overflow-y-auto">
+                      {/* Search */}
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-300 mb-2">Search</label>
+                        <div className="relative">
+                          <input
+                            type="text"
+                            placeholder="Search by model, brand, or category..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full px-4 py-3 pl-12 bg-gray-700/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
+                          />
+                          <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                          </svg>
+                        </div>
+                      </div>
+                      {/* Category */}
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-300 mb-2">Category</label>
+                        <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200">
+                          <option value="">All Categories</option>
+                          {categories.map(category => (
+                            <option key={category} value={category}>{category}</option>
+                          ))}
+                        </select>
+                      </div>
+                      {/* Brand */}
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-300 mb-2">Brand</label>
+                        <select value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)} className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200">
+                          <option value="">All Brands</option>
+                          {brands.map(brand => (
+                            <option key={brand} value={brand}>{brand}</option>
+                          ))}
+                        </select>
+                      </div>
+                      {/* Model */}
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-300 mb-2">Model</label>
+                        <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)} className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200">
+                          <option value="">All Models</option>
+                          {models.map(model => (
+                            <option key={model} value={model}>{model}</option>
+                          ))}
+                        </select>
+                      </div>
+                      {/* Year From/To */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-300 mb-2">Year From</label>
+                          <select value={selectedYearFrom} onChange={(e) => setSelectedYearFrom(e.target.value)} className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200">
+                            <option value="">Any</option>
+                            {years.map(year => (
+                              <option key={year} value={year}>{year}</option>
+                            ))}
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-300 mb-2">Year To</label>
+                          <select value={selectedYearTo} onChange={(e) => setSelectedYearTo(e.target.value)} className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200">
+                            <option value="">Any</option>
+                            {years.map(year => (
+                              <option key={year} value={year}>{year}</option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                      {/* Fuel */}
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-300 mb-2">Fuel</label>
+                        <select value={selectedFuel} onChange={(e) => setSelectedFuel(e.target.value)} className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200">
+                          <option value="">All Fuels</option>
+                          {fuels.map(fuel => (
+                            <option key={fuel} value={fuel}>{fuel}</option>
+                          ))}
+                        </select>
+                      </div>
+                      {/* Transmission */}
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-300 mb-2">Transmission</label>
+                        <select value={selectedTransmission} onChange={(e) => setSelectedTransmission(e.target.value)} className="w-full px-3 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200">
+                          <option value="">All Transmissions</option>
+                          {transmissions.map(transmission => (
+                            <option key={transmission} value={transmission}>{transmission}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="p-4 border-t border-gray-700 grid grid-cols-2 gap-3">
+                      <button
+                        onClick={() => {
+                          clearFilters();
+                          setShowMobileFilters(false);
+                        }}
+                        className="px-4 py-3 bg-gray-600 text-white text-sm font-medium rounded-lg hover:bg-gray-500 transition-colors duration-200"
+                      >
+                        Clear All
+                      </button>
+                      <button
+                        onClick={() => setShowMobileFilters(false)}
+                        className="px-4 py-3 bg-yellow-600 text-white text-sm font-medium rounded-lg hover:bg-yellow-700 transition-colors duration-200"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Products Grid */}
+              {currentProducts.length === 0 ? (
           <div className="text-center py-12">
             <svg className="w-16 h-16 text-gray-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -767,7 +701,7 @@ export default function AllProductsPage() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {currentProducts.map((product) => {
             const mainImage = (product.images && product.images.length > 0) 
               ? product.images[0] 
@@ -862,6 +796,24 @@ export default function AllProductsPage() {
                         )}
                       </div>
                     </div>
+                    {/* Inline Share below availability */}
+                    <div className="flex justify-end -mt-2 mb-2">
+                      {!product.isSold && (
+                        <button
+                          onClick={() => handleShareProduct(product)}
+                          className="p-2 rounded-lg border border-gray-600 text-gray-300 hover:border-gray-500 hover:text-gray-200 hover:bg-gray-700/20 transition-colors duration-200"
+                          aria-label="Share product"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <circle cx="6" cy="12" r="2" strokeWidth={2} />
+                            <circle cx="18" cy="6" r="2" strokeWidth={2} />
+                            <circle cx="18" cy="18" r="2" strokeWidth={2} />
+                            <path d="M8 12l8-6" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M8 12l8 6" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
                     
                                 {product.fuel && (
               <div className="flex items-center space-x-2 mb-4">
@@ -945,8 +897,8 @@ export default function AllProductsPage() {
                      </div>
          )}
 
-        {/* Pagination Controls */}
-        {totalPages > 1 && (
+         {/* Pagination Controls */}
+         {totalPages > 1 && (
           <div className="mt-12 flex flex-col items-center">
             {/* Page Info */}
             <div className="text-center mb-6">
@@ -1071,7 +1023,9 @@ export default function AllProductsPage() {
             </div>
           </div>
         )}
-      </div>
+            </section>
+          </div>
+        </div>
       </div>
       <Footer />
     </div>

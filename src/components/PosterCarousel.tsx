@@ -98,7 +98,7 @@ export default function PosterCarousel() {
 
   if (loading) {
     return (
-      <div className="w-full h-48 sm:h-64 md:h-96 lg:h-[500px] xl:h-[600px] bg-gray-200 animate-pulse rounded-lg flex items-center justify-center">
+      <div className="w-full h-56 sm:h-64 md:h-96 lg:h-[500px] xl:h-[600px] bg-gray-200 animate-pulse rounded-2xl md:rounded-lg flex items-center justify-center">
         <div className="text-gray-500">Loading posters...</div>
       </div>
     );
@@ -109,7 +109,7 @@ export default function PosterCarousel() {
   }
 
   return (
-    <div className="relative w-full h-48 sm:h-64 md:h-96 lg:h-[500px] xl:h-[600px] overflow-hidden rounded-lg">
+    <div className="relative w-full h-56 sm:h-64 md:h-96 lg:h-[500px] xl:h-[600px] overflow-hidden rounded-2xl md:rounded-lg">
       {/* Poster Image */}
       <div className="w-full h-full relative bg-gradient-to-br from-gray-800 to-gray-900">
         <img
@@ -125,7 +125,7 @@ export default function PosterCarousel() {
         <>
           <button
             onClick={goToPrevious}
-            className="absolute left-2 sm:left-4 md:left-6 top-1/2 transform -translate-y-1/2 bg-gray-900/80 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full hover:bg-gray-800/90 hover:scale-110 transition-all duration-300 border border-yellow-500/30 hover:border-yellow-400/50 shadow-2xl"
+            className="absolute left-2 sm:left-4 md:left-6 top-1/2 transform -translate-y-1/2 bg-gray-900/80 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full hover:bg-gray-800/90 hover:scale-110 transition-all duration-300 border md:border-yellow-500/30 md:hover:border-yellow-400/50 shadow-2xl"
             aria-label="Previous poster"
           >
             <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -134,7 +134,7 @@ export default function PosterCarousel() {
           </button>
           <button
             onClick={goToNext}
-            className="absolute right-2 sm:right-4 md:right-6 top-1/2 transform -translate-y-1/2 bg-gray-900/80 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full hover:bg-gray-800/90 hover:scale-110 transition-all duration-300 border border-yellow-500/30 hover:border-yellow-400/50 shadow-2xl"
+            className="absolute right-2 sm:right-4 md:right-6 top-1/2 transform -translate-y-1/2 bg-gray-900/80 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full hover:bg-gray-800/90 hover:scale-110 transition-all duration-300 border md:border-yellow-500/30 md:hover:border-yellow-400/50 shadow-2xl"
             aria-label="Next poster"
           >
             <svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

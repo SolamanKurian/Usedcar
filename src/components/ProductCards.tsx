@@ -49,6 +49,23 @@ export default function ProductCards() {
     window.open(whatsappUrl, '_blank');
   };
 
+  // Share product
+  const handleShareProduct = async (product: Product) => {
+    try {
+      const origin = typeof window !== 'undefined' ? window.location.origin : '';
+      const shareUrl = `${origin}/product/${product.id}`;
+      const title = `${product.brand} ${product.modelName ?? ''}`.trim();
+      const text = `Check out this ${product.category} (${product.yearOfManufacture}) on PreCar`;
+      // @ts-ignore
+      if (navigator.share) {
+        // @ts-ignore
+        await navigator.share({ title, text, url: shareUrl });
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(shareUrl);
+      }
+    } catch {}
+  };
+
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -197,7 +214,7 @@ export default function ProductCards() {
                        </h3>
                      )}
                     
-                                            <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center space-x-2">
                             <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -216,6 +233,23 @@ export default function ProductCards() {
                             </span>
                           </div>
                         </div>
+
+                    {/* Inline Share below availability */}
+                    <div className="flex justify-end -mt-1 mb-2">
+                      <button
+                        onClick={() => handleShareProduct(product)}
+                        className="p-2 rounded-lg border border-gray-600 text-gray-300 hover:border-gray-500 hover:text-gray-200 hover:bg-gray-700/20 transition-colors duration-200"
+                        aria-label="Share product"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <circle cx="6" cy="12" r="2" strokeWidth={2} />
+                          <circle cx="18" cy="6" r="2" strokeWidth={2} />
+                          <circle cx="18" cy="18" r="2" strokeWidth={2} />
+                          <path d="M8 12l8-6" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                          <path d="M8 12l8 6" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </button>
+                    </div>
                         
                                     {product.fuel && (
               <div className="flex items-center space-x-2 mb-4">
@@ -264,6 +298,8 @@ export default function ProductCards() {
                       </svg>
                       <span>View</span>
                     </Link>
+
+                    
                   </div>
                 </div>
               </div>

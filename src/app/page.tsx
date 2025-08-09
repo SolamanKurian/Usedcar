@@ -47,7 +47,7 @@ export default function Home() {
             className="w-full h-full object-cover"
           />
           {/* Overlay for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-black/20 md:from-black/70 md:via-black/50 md:to-black/30"></div>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
@@ -88,16 +88,16 @@ export default function Home() {
         </div>
 
         {/* Stats Section */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6 bg-gray-900/80 backdrop-blur-sm rounded-2xl border border-yellow-500/30 hover:border-yellow-400/50 transition-all duration-300">
-              <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6 sm:pb-16">
+          <div className="grid grid-cols-3 gap-3 md:grid-cols-3 md:gap-8">
+            <div className="text-center p-2 sm:p-6 bg-gray-900/40 sm:bg-gray-900/80 backdrop-blur-sm rounded-xl sm:rounded-2xl border border-yellow-500/20 sm:border-yellow-500/30 hover:border-yellow-400/50 transition-all duration-300">
+              <div className="w-10 h-10 sm:w-16 sm:h-16 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-4">
+                <svg className="w-5 h-5 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">1000+</h3>
-              <p className="text-yellow-200">Quality Cars</p>
+              <h3 className="text-base sm:text-2xl font-bold text-white mb-1 sm:mb-2">1000+</h3>
+              <p className="text-xs sm:text-base text-yellow-200">Quality Cars</p>
             </div>
             <div className="text-center p-6 bg-gray-900/80 backdrop-blur-sm rounded-2xl border border-yellow-500/30 hover:border-yellow-400/50 transition-all duration-300">
               <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
